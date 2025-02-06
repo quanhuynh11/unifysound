@@ -1,0 +1,24 @@
+CREATE TABLE Users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,  -- Just collect first name/nickname
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Songlists (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Songs (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  songlist_id INT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  artist VARCHAR(255),
+  link_url VARCHAR(255), 
+  picture_url VARCHAR(255),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (songlist_id) REFERENCES Songlists(id)
+);
