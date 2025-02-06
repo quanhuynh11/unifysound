@@ -5,5 +5,11 @@ export async function LoginDatabase(username) {
 
     const response = await fetch(`api/system-access?method=login&username=${newUsername}`);
 
-    return response;
+    if (!response.ok) {
+        return false;
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
 }

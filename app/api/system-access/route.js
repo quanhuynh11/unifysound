@@ -13,12 +13,14 @@ export async function GET(request) {
         }
         
         db = await createConnection();
+        const connection = await db.getConnection();
 
         switch (method) {
             case "login": {
                 const username = searchParams.get("username");
 
                 if (!username) {
+                    connection.release();
                     return new Response(false, { status: 400 });
                 }
 
@@ -26,11 +28,16 @@ export async function GET(request) {
 
                 const [result] = await db.execute(sqlCommand, [username]);
 
-                console.log(result);
+                if(!result.length) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+                connection.release();
 
-                return new Response(true, { status: 200 });
+                return new Response(JSON.stringify(result), { status: 200 });
             }
             default: {
+                connection.release();
                 return new Response(false, { status: 400 });
             }
         }
@@ -38,10 +45,5 @@ export async function GET(request) {
     catch (error) {
         console.log(error);
         return new Response(false, { status: 500 });
-    }
-    finally {
-        if (db) {
-            await db.end();
-        }
     }
 }
