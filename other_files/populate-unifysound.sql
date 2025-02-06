@@ -1,17 +1,17 @@
 -- First create some users (assuming Users table exists)
-INSERT INTO Users (name) VALUES
+INSERT INTO users (name) VALUES
 ('Alex'),
 ('Sam'),
 ('Jordan');
 
 -- Create songlists
-INSERT INTO Songlists (user_id, title, created_at) VALUES
+INSERT INTO songlists (user_id, title, created_at) VALUES
 (1, 'Summer Vibes', '2024-03-01 14:30:00'),
 (1, 'Workout Mix', '2024-03-05 09:15:00'),
 (2, 'Chill Lofi Beats', '2024-03-10 20:45:00');
 
 -- Create songs
-INSERT INTO Songs (songlist_id, title, artist, link_url, picture_url) VALUES
+INSERT INTO songs (songlist_id, title, artist, link_url, picture_url) VALUES
 -- Songs for "Summer Vibes" (songlist_id=1)
 (1, 'Sunset Dreams', 'Ocean Waves', 'https://youtu.be/summer1', 'https://example.com/pics/sunset.jpg'),
 (1, 'Beach Party', 'The Sandcastles', 'https://youtu.be/summer2', 'https://example.com/pics/beach.jpg'),

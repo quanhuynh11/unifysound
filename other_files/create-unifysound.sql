@@ -1,18 +1,18 @@
-CREATE TABLE Users (
+CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL,  -- Just collect first name/nickname
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Songlists (
+CREATE TABLE songlists (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT NOT NULL,
   title VARCHAR(255) NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES Users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE Songs (
+CREATE TABLE songs (
   id INT PRIMARY KEY AUTO_INCREMENT,
   songlist_id INT NOT NULL,
   title VARCHAR(255) NOT NULL,
@@ -20,5 +20,5 @@ CREATE TABLE Songs (
   link_url VARCHAR(255), 
   picture_url VARCHAR(255),
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (songlist_id) REFERENCES Songlists(id)
+  FOREIGN KEY (songlist_id) REFERENCES songlists(id)
 );
