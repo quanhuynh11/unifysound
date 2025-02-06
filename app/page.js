@@ -9,6 +9,8 @@ export default function Login() {
 
     const handleLogin = async () => {
         const response = LoginDatabase(username);
+
+        window.location.href = "/home-screen";
     }
     
     return (
