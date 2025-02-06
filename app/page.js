@@ -8,9 +8,10 @@ export default function Login() {
     const [username, setUsername] = useState("");
 
     const handleLogin = async () => {
-        const response = LoginDatabase(username);
+        const response = await LoginDatabase(username);
+        console.log(response);
 
-        window.location.href = "/home-screen";
+        // window.location.href = "/home-screen";
     }
     
     return (
