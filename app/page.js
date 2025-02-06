@@ -14,7 +14,8 @@ export default function Login() {
             setErrorMsg(false);
             const response = await LoginDatabase(username);
             if(Array.isArray(response)) {
-                sessionStorage.setItem("user", JSON.stringify(response[0]));
+                sessionStorage.setItem("id", response[0].id);
+                sessionStorage.setItem("username", response[0].name);
                 
                 window.location.href = "/home-screen";
             }
