@@ -17,7 +17,13 @@ export async function LoginDatabase(username) {
 export async function RegisterDatabase(username) {
     let newUsername = sanitizeUsername(username);
 
-    const response = await fetch(`api/system-access?method=register&username=${newUsername}`);
+    const response = await fetch(`api/system-access?method=register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: newUsername }),
+    });
 
     if (!response.ok) {
         return false;
