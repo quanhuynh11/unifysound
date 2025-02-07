@@ -38,6 +38,7 @@ export default function Login() {
                 {errorMsg && <p className="text-red-500 mt-2">Username does not exist</p>}
 
                 <button onClick={handleLogin} className="w-1/5 h-16 font-bold bg-brightBlue mt-10 rounded-lg hover:bg-brightBlue/40">Login</button>
+                <p className="mt-5">Need an account? <a href="/register-screen" className="text-brightBlue hover:underline">Create one</a></p>
             </section>
         </section>
     )

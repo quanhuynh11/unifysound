@@ -36,6 +36,27 @@ export async function GET(request) {
 
                 return new Response(JSON.stringify(result), { status: 200 });
             }
+
+            case "register": {
+                const username = searchParams.get("username");
+
+                if (!username) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+
+                const sqlCommand = `INSERT INTO users (name) VALUES (?);`;
+
+                const [result] = await db.execute(sqlCommand, [username]);
+
+                if(!result.affectedRows) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+                connection.release();
+
+                return new Response(true, { status: 200 });
+            }
             default: {
                 connection.release();
                 return new Response(false, { status: 400 });

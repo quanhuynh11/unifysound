@@ -13,3 +13,15 @@ export async function LoginDatabase(username) {
     console.log(data);
     return data;
 }
+
+export async function RegisterDatabase(username) {
+    let newUsername = sanitizeUsername(username);
+
+    const response = await fetch(`api/system-access?method=register&username=${newUsername}`);
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return true;
+}
