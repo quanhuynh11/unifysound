@@ -90,6 +90,6 @@ export async function POST(request) {
         }
     }
     catch (error) {
-        return new Response(false, { status: 500 });
+        return new Response(error, { status: 500 });
     }
 }

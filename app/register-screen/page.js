@@ -9,6 +9,8 @@ export default function RegisterScreen() {
 
     const [showSuccess, setShowSuccess] = useState(false);
 
+    const [showFail, setShowFail] = useState(false);
+
     const handleRegister = async (e) => {
         e.preventDefault();
 
@@ -18,6 +20,9 @@ export default function RegisterScreen() {
             if(response) {
                 setShowSuccess(true);
                 window.location.href = "./";
+            }
+            else {
+                setShowFail(true);
             }
         }
         catch (error) {
@@ -31,7 +36,8 @@ export default function RegisterScreen() {
                 <h1 className="text-4xl font-bold mb-5">Register</h1>
                 <form onSubmit={handleRegister} className="flex flex-col justify-center items-center w-full">
                     <input onChange={(e) => setUsername(e.target.value)} value={username} type="text" placeholder="Username" className="w-1/5 h-16 bg-secondaryBlue p-3 rounded-lg outline-none" />
-                    {showSuccess && <p className="text-green-500 mt-5">Registration successful!</p>}
+                    {showSuccess && <p className="text-green-500">Registration successful!</p>}
+                    {showFail && <p className="text-red-500">That username is already taken!</p>}
                     <button type="submit" className="w-1/5 h-16 font-bold bg-brightBlue mt-10 rounded-lg hover:bg-brightBlue/40">Register</button>
                     <p className="mt-5">Already have an account? <a href="./" className="text-brightBlue hover:underline">Login</a></p>
                 </form>

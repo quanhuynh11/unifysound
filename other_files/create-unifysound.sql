@@ -1,6 +1,6 @@
 CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,  -- Just collect first name/nickname
+  name VARCHAR(100) UNIQUE NOT NULL,  -- Just collect first name/nickname
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
