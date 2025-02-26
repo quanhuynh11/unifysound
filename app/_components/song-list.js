@@ -2,10 +2,12 @@
 
 import { getSongs } from "@/utility/database-functions";
 import { useEffect, useState } from "react"
+import SongCard from "./song-card";
 
-export default function SongList() {
+export default function SongList({ reRender, setReRender }) {
 
     const [songs, setSongs] = useState([]);
+
 
     useEffect(() => {
         const getSongData = async () => {
@@ -25,17 +27,13 @@ export default function SongList() {
         }
 
         getSongData();
-    }, [])
+    }, [reRender])
 
     return (
         <section className="flex justify-center flex-wrap items-center text-center">
             { 
                 songs.map((song) => (
-                    <div className="p-5 m-5 bg-tertiaryBlue rounded-lg" key={song.id}>
-                        <p className="font-bold">{song.title}</p>
-                        <p>-{song.artist}-</p>
-                        <img className="w-48 h-48" src={song.picture_url} alt={song.title} />
-                    </div>
+                    <SongCard key={song.id} song={song} setReRender={() => setReRender(!reRender)} />
                 ))
             }
         </section>

@@ -13,6 +13,8 @@ export default function HomePage() {
 
     const [renderAddSongForm, setRenderAddSongForm] = useState(false);
 
+    const [reRender, setReRender] = useState(false);
+
     useEffect(() => {
         const user = {
             username: sessionStorage.getItem("username"),
@@ -35,7 +37,7 @@ export default function HomePage() {
 
     return (
         <section className="h-screen w-full bg-primaryBlue">
-            { renderAddSongForm && <AddSongForm setRenderAddSongForm={setRenderAddSongForm} /> }
+            { renderAddSongForm && <AddSongForm setRenderAddSongForm={setRenderAddSongForm} setReRender={() => setReRender(!reRender)} /> }
             <header className="flex flex-col justify-center items-center h-1/6 bg-secondaryBlue">
 
                 <h1 className="text-4xl font-bold mb-5">Welcome {user.username}</h1>
@@ -47,7 +49,7 @@ export default function HomePage() {
                 <h1 className="text-4xl font-bold mt-5">Songs</h1>
                 <button onClick={() => setRenderAddSongForm(true)} className="w-1/5 font-bold bg-brightBlue mt-5 p-5 rounded-lg hover:bg-brightBlue/40">Add Song</button>
                 <section className="my-5 overflow-y-scroll">
-                    <SongList />
+                    <SongList reRender={reRender} setReRender={setReRender}/>
                 </section>
             </section>
         </section>

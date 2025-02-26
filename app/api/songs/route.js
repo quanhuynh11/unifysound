@@ -86,3 +86,50 @@ export async function POST(request) {
         return new Response(error, { status: 400 });
     }
 }
+
+export async function PUT(request) {
+    let db;
+
+    try {
+        const { searchParams } = new URL(request.url);
+
+        const method = searchParams.get("method");
+
+        if (!method) {
+            return new Response(false, { status: 400 });
+        }
+
+        db = await createConnection();
+        const connection = await db.getConnection();
+
+        switch (method) {
+            case "editSong": {
+                const data = await request.json();
+
+                if (!data) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+
+                const sqlCommand = `UPDATE songs SET title = ?, artist = ?, link_url = ?, picture_url = ? WHERE id = ?;`;
+
+                const [result] = await db.execute(sqlCommand, [data.title, data.artist, data.link, data.picture, data.id]);
+
+                if (!result.affectedRows) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+
+                connection.release();
+                return new Response(true, { status: 200 });
+            }
+            default: {
+                connection.release();
+                return new Response(false, { status: 400 });
+            }
+        }
+    }
+    catch (error) {
+        return new Response(error, { status: 400 });
+    }
+}

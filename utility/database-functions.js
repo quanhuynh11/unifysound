@@ -58,3 +58,19 @@ export async function addSong(data) {
 
     return true;
 }
+
+export async function editSong(data) {
+    const response = await fetch(`api/songs?method=editSong`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return true;
+}
