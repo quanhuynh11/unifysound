@@ -1,3 +1,4 @@
+import { addSong } from "@/utility/database-functions";
 import { useEffect, useRef, useState } from "react";
 
 export default function AddSongForm({ setRenderAddSongForm }) {
@@ -11,7 +12,9 @@ export default function AddSongForm({ setRenderAddSongForm }) {
 
     const handleAddSong = async (e) => {
         e.preventDefault();
-        console.log(title, artist, link, picture);
+
+        await addSong({ title, artist, link, picture });
+
         setRenderAddSongForm(false);
     }
 
