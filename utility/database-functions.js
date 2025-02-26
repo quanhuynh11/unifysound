@@ -31,3 +31,14 @@ export async function RegisterDatabase(username) {
 
     return true;
 }
+
+export async function getSongs() {
+    const response = await fetch(`api/songs?method=getSongs`);
+
+    if (!response.ok) {
+        return false;
+    }
+
+    const data = await response.json();
+    return data;
+}
