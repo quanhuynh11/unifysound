@@ -35,9 +35,7 @@ export default function HomePage() {
 
     return (
         <section className="h-screen w-full bg-primaryBlue">
-            { renderAddSongForm &&
-                <AddSongForm />
-            }
+            { renderAddSongForm && <AddSongForm setRenderAddSongForm={setRenderAddSongForm} /> }
             <header className="flex flex-col justify-center items-center h-1/6 bg-secondaryBlue">
 
                 <h1 className="text-4xl font-bold mb-5">Welcome {user.username}</h1>

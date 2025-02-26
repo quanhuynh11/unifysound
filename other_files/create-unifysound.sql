@@ -15,7 +15,7 @@ CREATE TABLE songlists (
 CREATE TABLE songs (
   id INT PRIMARY KEY AUTO_INCREMENT,
   songlist_id INT,
-  title VARCHAR(255) NOT NULL,
+  title VARCHAR(255) NOT NULL UNIQUE,
   artist VARCHAR(255),
   link_url VARCHAR(255), 
   picture_url VARCHAR(255),
