@@ -35,7 +35,7 @@ export default function AddSongForm({ setRenderAddSongForm, setReRender }) {
 
     return (
         <section className="flex fixed top-0 left-0 flex-col w-full h-full bg-gray-600/80 justify-center items-center">
-            <section ref={formRef} className="w-1/2 h-3/4 flex flex-col items-center bg-primaryBlue p-5 rounded-lg">
+            <section ref={formRef} className="w-1/2 h-3/4 flex flex-col items-center bg-primaryBlue p-5 rounded-lg overflow-auto">
                 <h1 className="text-4xl font-bold mb-10">Add Song</h1>
 
                 <section className="w-full flex justify-center items-center mb-10">

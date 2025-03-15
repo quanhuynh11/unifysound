@@ -30,7 +30,7 @@ export default function SongList({ reRender, setReRender }) {
     }, [reRender])
 
     return (
-        <section className="flex justify-center flex-wrap items-center text-center">
+        <section className="flex justify-center flex-wrap items-center text-center ">
             { 
                 songs.map((song) => (
                     <SongCard key={song.id} song={song} setReRender={() => setReRender(!reRender)} />

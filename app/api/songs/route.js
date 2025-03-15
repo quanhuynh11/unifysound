@@ -133,3 +133,50 @@ export async function PUT(request) {
         return new Response(error, { status: 400 });
     }
 }
+
+export async function DELETE(request) {
+    let db;
+
+    try {
+        const { searchParams } = new URL(request.url);
+
+        const method = searchParams.get("method");
+
+        if (!method) {
+            return new Response(false, { status: 400 });
+        }
+
+        db = await createConnection();
+        const connection = await db.getConnection();
+
+        switch (method) {
+            case "deleteSong": {
+                const id = searchParams.get("id");
+
+                if (!id) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+
+                const sqlCommand = `DELETE FROM songs WHERE id = ?;`;
+
+                const [result] = await db.execute(sqlCommand, [id]);
+
+                if (!result.affectedRows) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+
+                connection.release();
+                return new Response(true, { status: 200 });
+            }
+            default: {
+                connection.release();
+                return new Response(false, { status: 400 });
+            }
+        }
+    }
+    catch (error) {
+        return new Response(error, { status: 400 });
+    }
+}

@@ -74,3 +74,15 @@ export async function editSong(data) {
 
     return true;
 }
+
+export async function deleteSong(songID) {
+    const response = await fetch(`api/songs?method=deleteSong&id=${songID}`, {
+        method: "DELETE",
+    });
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return true;
+}

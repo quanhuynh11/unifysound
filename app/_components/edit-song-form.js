@@ -1,4 +1,4 @@
-import { editSong } from "@/utility/database-functions";
+import { deleteSong, editSong } from "@/utility/database-functions";
 import { useEffect, useRef, useState } from "react";
 
 export default function EditSongForm({ setRenderEditSongForm, songData, setReRender }) {
@@ -14,6 +14,13 @@ export default function EditSongForm({ setRenderEditSongForm, songData, setReRen
         e.preventDefault();
 
         await editSong({ title, artist, link, picture, id: songData.id });
+
+        setRenderEditSongForm(false);
+        setReRender(true);
+    }
+
+    const handleDeleteSong = async () => {
+        await deleteSong(songData.id);
 
         setRenderEditSongForm(false);
         setReRender(true);
@@ -35,7 +42,7 @@ export default function EditSongForm({ setRenderEditSongForm, songData, setReRen
 
     return (
         <section className="flex fixed top-0 left-0 flex-col w-full h-full bg-gray-600/80 justify-center items-center">
-            <section ref={formRef} className="w-1/2 h-3/4 flex flex-col items-center bg-primaryBlue p-5 rounded-lg">
+            <section ref={formRef} className="w-1/2 h-3/4 flex flex-col items-center bg-primaryBlue p-5 rounded-lg overflow-auto">
                 <h1 className="text-4xl font-bold mb-10">Edit Song</h1>
 
                 <section className="w-full flex justify-center items-center mb-10">
@@ -68,7 +75,8 @@ export default function EditSongForm({ setRenderEditSongForm, songData, setReRen
                     </section>
 
                     <section className="w-full flex">
-                    <button type="submit" className="font-bold bg-brightBlue p-5 w-full rounded-lg hover:bg-brightBlue/40">Save</button>
+                        <button type="button" onClick={handleDeleteSong} className="font-bold bg-red-600 p-5 w-full rounded-lg hover:bg-red-700 mr-5">Delete</button>
+                        <button type="submit" className="font-bold bg-brightBlue p-5 w-full rounded-lg hover:bg-brightBlue/40 ml-5">Save</button>
                     </section>
                 </form>
 
