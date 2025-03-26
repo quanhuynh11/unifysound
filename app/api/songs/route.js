@@ -29,6 +29,27 @@ export async function GET(request) {
                 connection.release();
                 return new Response(JSON.stringify(result), { status: 200 });
             }
+
+            case "getSongByID": {
+                const id = searchParams.get("id");
+
+                if (!id) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+
+                const sqlCommand = `SELECT * FROM songs WHERE id = ?;`;
+
+                const [result] = await db.execute(sqlCommand, [id]);
+
+                if (!result.length) {
+                    connection.release();
+                    return new Response(false, { status: 400 });
+                }
+
+                connection.release();
+                return new Response(JSON.stringify(result), { status: 200 });
+            }
             default: {
                 connection.release();
                 return new Response(false, { status: 400 });
