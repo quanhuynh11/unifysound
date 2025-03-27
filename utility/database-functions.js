@@ -10,7 +10,7 @@ export async function LoginDatabase(username) {
     }
 
     const data = await response.json();
-    console.log(data);
+
     return data;
 }
 
@@ -32,8 +32,12 @@ export async function RegisterDatabase(username) {
     return true;
 }
 
-export async function getSongs() {
-    const response = await fetch(`api/songs?method=getSongs`);
+export async function getSongs(token) {
+    const response = await fetch(`api/songs?method=getSongs`, {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        },
+    });
 
     if (!response.ok) {
         return false;
@@ -43,11 +47,12 @@ export async function getSongs() {
     return data;
 }
 
-export async function addSong(data) {
+export async function addSong(data, token) {
     const response = await fetch(`api/songs?method=addSong`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     });
@@ -59,11 +64,12 @@ export async function addSong(data) {
     return true;
 }
 
-export async function editSong(data) {
+export async function editSong(data, token) {
     const response = await fetch(`api/songs?method=editSong`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     });
@@ -75,9 +81,12 @@ export async function editSong(data) {
     return true;
 }
 
-export async function deleteSong(songID) {
+export async function deleteSong(songID, token) {
     const response = await fetch(`api/songs?method=deleteSong&id=${songID}`, {
         method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        },
     });
 
     if (!response.ok) {

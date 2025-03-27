@@ -13,22 +13,25 @@ export default function Login() {
         try {
             setErrorMsg(false);
             const response = await LoginDatabase(username);
-            if(Array.isArray(response)) {
-                sessionStorage.setItem("id", response[0].id);
-                sessionStorage.setItem("username", response[0].name);
-                
-                window.location.href = "/home-screen";
-            }
-            else {
-                setErrorMsg(true);
-            }
 
+            if (response && response.token && response.user) {
+                if (Array.isArray(response.user)) {
+                    sessionStorage.setItem("id", response.user[0].id);
+                    sessionStorage.setItem("username", response.user[0].name);
+                }
+                localStorage.setItem("token", response.token);  // Save the token to localStorage
+
+                window.location.href = "/home-screen";  // Redirect after login
+            } else {
+                setErrorMsg(true);  // Show error if response is invalid
+            }
         }
         catch (error) {
             console.error("Error:", error);
+            setErrorMsg(true);  // Set error message on failure
         }
-    }
-    
+    };
+
     return (
         <section className="h-screen w-full bg-primaryBlue">
             <section className="flex flex-col justify-center items-center h-full">

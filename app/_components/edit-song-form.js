@@ -10,17 +10,19 @@ export default function EditSongForm({ setRenderEditSongForm, songData, setReRen
     const [link, setLink] = useState(songData.link_url)
     const [picture, setPicture] = useState(songData.picture_url)
 
-    const handleAddSong = async (e) => {
+    const token = localStorage.getItem("token");
+
+    const handleEditSong = async (e) => {
         e.preventDefault();
 
-        await editSong({ title, artist, link, picture, id: songData.id });
+        await editSong({ title, artist, link, picture, id: songData.id }, token);
 
         setRenderEditSongForm(false);
         setReRender(true);
     }
 
     const handleDeleteSong = async () => {
-        await deleteSong(songData.id);
+        await deleteSong(songData.id, token);
 
         setRenderEditSongForm(false);
         setReRender(true);
@@ -51,7 +53,7 @@ export default function EditSongForm({ setRenderEditSongForm, songData, setReRen
                 {
                     console.log(songData)
                 }
-                <form onSubmit={handleAddSong} className="flex flex-col gap-5">
+                <form onSubmit={handleEditSong} className="flex flex-col gap-5">
                     <section className="flex items-center">
                         <label className="font-bold w-full text-right mr-4" htmlFor="title">Title</label>
                         <input value={title} onChange={(e) => setTitle(e.target.value)} className="p-3 rounded-md flex-1 text-black focus:outline-none" type="text" name="title" id="title" placeholder="Enter title" />

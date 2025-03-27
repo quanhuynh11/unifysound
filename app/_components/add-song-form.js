@@ -10,10 +10,12 @@ export default function AddSongForm({ setRenderAddSongForm, setReRender }) {
     const [link, setLink] = useState("")
     const [picture, setPicture] = useState("/placeholder.svg")
 
+    const token = localStorage.getItem("token");
+
     const handleAddSong = async (e) => {
         e.preventDefault();
 
-        await addSong({ title, artist, link, picture });
+        await addSong({ title, artist, link, picture }, token);
 
         setRenderAddSongForm(false);
         setReRender();

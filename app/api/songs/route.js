@@ -1,9 +1,33 @@
 import { createConnection } from "@/lib/db";
+import jwt from "jsonwebtoken";
+
+const secretKey = process.env.JWT_SECRET_KEY;
+
+// Middleware to verify the JWT
+const verifyToken = (token) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, secretKey, (err, decoded) => {
+            if (err) {
+                reject(new Error("Invalid token"));
+            }
+            resolve(decoded);
+        });
+    });
+};
 
 export async function GET(request) {
     let db;
 
     try {
+        const token = request.headers.get("Authorization")?.split(" ")[1]; // Get the token from Authorization header
+
+        if (!token) {
+            return new Response("Unauthorized", { status: 401 });
+        }
+
+        // Verify the token
+        const decoded = await verifyToken(token);
+
         const { searchParams } = new URL(request.url);
 
         const method = searchParams.get("method");
@@ -65,6 +89,15 @@ export async function POST(request) {
     let db;
 
     try {
+        const token = request.headers.get("Authorization")?.split(" ")[1]; // Get the token from Authorization header
+
+        if (!token) {
+            return new Response("Unauthorized", { status: 401 });
+        }
+
+        // Verify the token
+        const decoded = await verifyToken(token);
+
         const { searchParams } = new URL(request.url);
 
         const method = searchParams.get("method");
@@ -112,6 +145,16 @@ export async function PUT(request) {
     let db;
 
     try {
+
+        const token = request.headers.get("Authorization")?.split(" ")[1]; // Get the token from Authorization header
+
+        if (!token) {
+            return new Response("Unauthorized", { status: 401 });
+        }
+
+        // Verify the token
+        const decoded = await verifyToken(token);
+
         const { searchParams } = new URL(request.url);
 
         const method = searchParams.get("method");
@@ -159,6 +202,15 @@ export async function DELETE(request) {
     let db;
 
     try {
+        const token = request.headers.get("Authorization")?.split(" ")[1]; // Get the token from Authorization header
+
+        if (!token) {
+            return new Response("Unauthorized", { status: 401 });
+        }
+
+        // Verify the token
+        const decoded = await verifyToken(token);
+        
         const { searchParams } = new URL(request.url);
 
         const method = searchParams.get("method");

@@ -31,6 +31,9 @@ export default function HomePage() {
     const handleLogout = () => {
         sessionStorage.removeItem("username");
         sessionStorage.removeItem("id");
+
+        localStorage.removeItem("token");
+        
         window.location.href = "./";
     }
 

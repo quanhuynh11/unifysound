@@ -1,17 +1,20 @@
 import { createConnection } from "@/lib/db";
+import jwt from "jsonwebtoken";
+
+const secretKey = process.env.JWT_SECRET_KEY;
 
 export async function GET(request) {
     let db;
-    
+
     try {
         const { searchParams } = new URL(request.url);
-        
+
         const method = searchParams.get("method");
-        
+
         if (!method) {
             return new Response(false, { status: 400 });
         }
-        
+
         db = await createConnection();
         const connection = await db.getConnection();
 
@@ -28,13 +31,16 @@ export async function GET(request) {
 
                 const [result] = await db.execute(sqlCommand, [username]);
 
-                if(!result.length) {
+                if (!result.length) {
                     connection.release();
                     return new Response(false, { status: 400 });
                 }
                 connection.release();
 
-                return new Response(JSON.stringify(result), { status: 200 });
+                // Generate JWT token
+                const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
+
+                return new Response(JSON.stringify({ token, user: result }), { status: 200 });
             }
             default: {
                 connection.release();
@@ -53,9 +59,9 @@ export async function POST(request) {
 
     try {
         const { searchParams } = new URL(request.url);
-        
+
         const method = searchParams.get("method");
-        
+
         if (!method) {
             return new Response(false, { status: 400 });
         }
@@ -75,7 +81,7 @@ export async function POST(request) {
 
                 const [result] = await db.execute(sqlCommand, [data.username]);
 
-                if(!result.affectedRows) {
+                if (!result.affectedRows) {
                     connection.release();
                     return new Response(false, { status: 400 });
                 }

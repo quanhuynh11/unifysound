@@ -8,11 +8,12 @@ export default function SongList({ reRender, setReRender }) {
 
     const [songs, setSongs] = useState([]);
 
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         const getSongData = async () => {
             try {
-                const data = await getSongs();
+                const data = await getSongs(token);
 
                 if (Array.isArray(data)) {
                     setSongs(data);
